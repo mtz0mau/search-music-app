@@ -72,6 +72,7 @@ export interface Item {
   mbid: string;
   image: Image[];
   type: string;
+  image_url?: string;
 }
 
 export interface Image {
