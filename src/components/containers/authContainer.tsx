@@ -41,6 +41,7 @@ export const RegisterFormContainer = () => {
       credentials={credentials}
       setCredentials={setCredentials}
       onSubmit={onSubmit}
+      buttonText="Registrarse"
     />
   );
 };

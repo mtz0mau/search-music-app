@@ -64,6 +64,16 @@ export interface Album {
   mbid: string;
 }
 
+export interface Item {
+  name: string;
+  url: string;
+  streamable: string;
+  listeners: number;
+  mbid: string;
+  image: Image[];
+  type: string;
+}
+
 export interface Image {
   "#text": string;
   size: string;

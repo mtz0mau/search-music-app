@@ -4,10 +4,12 @@ export const CredentialsForm = ({
   credentials,
   setCredentials,
   onSubmit,
+  buttonText = "Iniciar sesión",
 }: {
   credentials: Credentials;
   setCredentials: (credentials: Credentials) => void;
   onSubmit: () => void;
+  buttonText?: string;
 }) => {
   const handleSubmit = (e: any) => {
     e.preventDefault();
@@ -37,7 +39,7 @@ export const CredentialsForm = ({
           setCredentials({ ...credentials, password: e.target.value })
         }
       />
-      <button>Register</button>
+      <button>{buttonText}</button>
     </form>
   );
 };

@@ -1,7 +1,13 @@
+import {
+  SearchBarContainer,
+  SearchResultsContainer,
+} from "../../components/containers/searchContainer";
+
 export default function HomePage() {
   return (
     <div>
-      <div>Home</div>
+      <SearchBarContainer />
+      <SearchResultsContainer />
     </div>
   );
 }

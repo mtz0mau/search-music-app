@@ -5,7 +5,7 @@ import { Credentials } from "../interfaces/authInterfaces";
 type authStatus = "loading" | "unauth" | "auth";
 
 const AuthContext = createContext({
-  status: "loading" as authStatus,
+  status: "loading",
   login: (credentials: Credentials) => {
     console.log(credentials);
   },

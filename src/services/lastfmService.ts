@@ -1,4 +1,4 @@
-import { albumAdapter, artistAdapter, trackAdapter } from '../adapters/lastfmAdapters';
+import { itemAdapter } from '../adapters/lastfmAdapters';
 import { SearchConfig, AlbumSearchResponse, ArtistSearchResponse, TrackSearchResponse } from '../interfaces/lastfmInterfaces';
 
 class LastfmService {
@@ -19,7 +19,7 @@ class LastfmService {
       const response = await fetch(url);
       if (!response.ok) throw new Error("Error fetching data");
       const data: AlbumSearchResponse = await response.json();
-      return data.results.albummatches.album.map(album => albumAdapter(album));
+      return data.results.albummatches.album.map(album => itemAdapter(album, 'album'));
     },
   };
 
@@ -29,7 +29,7 @@ class LastfmService {
       const response = await fetch(url);
       if (!response.ok) throw new Error("Error fetching data");
       const data: ArtistSearchResponse = await response.json();
-      return data.results.artistmatches.artist.map(artist => artistAdapter(artist));
+      return data.results.artistmatches.artist.map(artist => itemAdapter(artist, 'artist'));
     },
   };
 
@@ -39,7 +39,7 @@ class LastfmService {
       const response = await fetch(url);
       if (!response.ok) throw new Error("Error fetching data");
       const data: TrackSearchResponse = await response.json();
-      return data.results.trackmatches.track.map(track => trackAdapter(track));
+      return data.results.trackmatches.track.map(track => itemAdapter(track, 'track'));
     },
   };
 }
