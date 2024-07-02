@@ -9,8 +9,8 @@ import {
 import { Credentials } from "../interfaces/authInterfaces";
 
 class FirebaseService {
-  app;
-  auth;
+  private app;
+  private auth;
 
   constructor() {
     this.app = initializeApp({
@@ -44,4 +44,5 @@ class FirebaseService {
   }
 }
 
-export const firebaseService = new FirebaseService();
+const firebaseService = new FirebaseService();
+export default firebaseService;
