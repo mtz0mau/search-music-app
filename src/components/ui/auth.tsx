@@ -1,4 +1,5 @@
 import { Credentials } from "../../interfaces/authInterfaces";
+import { Button, Input } from "./layout";
 
 export const CredentialsForm = ({
   credentials,
@@ -21,29 +22,27 @@ export const CredentialsForm = ({
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        className="border"
+    <form onSubmit={handleSubmit} className="grid gap-5 w-full md:w-[500px]">
+      <Input
         value={credentials.email}
         onChange={(e) =>
           setCredentials({ ...credentials, email: e.target.value })
         }
+        placeholder="Ingresa tu email..."
       />
-
-      <input
-        type="password"
-        className="border"
+      <Input
         value={credentials.password}
         onChange={(e) =>
           setCredentials({ ...credentials, password: e.target.value })
         }
+        type="password"
+        placeholder="Ingresa tu contraseña..."
       />
-      <button>{buttonText}</button>
+      <Button>{buttonText}</Button>
     </form>
   );
 };
 
 export const LogoutButton = ({ logout }: { logout: () => void }) => {
-  return <button onClick={logout}>Logout</button>;
+  return <Button color="secondary" onClick={logout}>Cerrar sesión</Button>;
 };

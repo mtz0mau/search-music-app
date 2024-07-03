@@ -1,12 +1,10 @@
-import { AuthProvider, DataProvider } from "./contexts";
+import { AuthProvider } from "./contexts";
 import { Router } from "./routes";
 
 export default function App() {
   return (
     <AuthProvider>
-      <DataProvider>
-        <Router />
-      </DataProvider>
+      <Router />
     </AuthProvider>
   );
 }

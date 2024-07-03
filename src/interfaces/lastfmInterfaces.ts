@@ -73,6 +73,7 @@ export interface Item {
   image: Image[];
   type: string;
   image_url?: string;
+  is_generic_image?: boolean;
 }
 
 export interface Image {
