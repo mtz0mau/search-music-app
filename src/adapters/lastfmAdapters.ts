@@ -1,4 +1,4 @@
-import { Item } from "../interfaces/lastfmInterfaces";
+import { Item, Results } from "../interfaces/lastfmInterfaces";
 
 export const itemAdapter = (item: any, type: string): Item => {
   const image_url = item.image[3]["#text"] || "https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.png";
@@ -15,5 +15,12 @@ export const itemAdapter = (item: any, type: string): Item => {
     type,
     image_url,
     is_generic_image,
+  }
+};
+
+export const resultsAdapter = (data: Item[], total_results: number): Results => {
+  return {
+    total_results,
+    data,
   }
 };

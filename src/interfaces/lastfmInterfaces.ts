@@ -80,3 +80,8 @@ export interface Image {
   "#text": string;
   size: string;
 }
+
+export interface Results {
+  total_results: number;
+  data: Item[];
+}

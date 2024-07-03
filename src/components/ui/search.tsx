@@ -3,6 +3,7 @@ import { H2, H3, Input, Text } from "./layout";
 import { CiSearch } from "react-icons/ci";
 import { IoMdClose } from "react-icons/io";
 import emptySrc from "../../assets/img/empty.webp";
+import { IoMdArrowBack } from "react-icons/io";
 
 export const SearchBar = ({
   query,
@@ -33,7 +34,7 @@ export const SearchBar = ({
         )}
       </div>
 
-      {query.length > 3 && (
+      {query.length >= 3 && (
         <Text className="mt-2 text-white opacity-60">
           {total_data} resultados
         </Text>
@@ -54,7 +55,7 @@ export const SearchResults = ({
       {data.length > 0 && (
         <div className="grid grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-4">
           {data.map((item) => (
-            <ResultItem key={item.mbid} item={item} />
+            <ResultItem key={item.url} item={item} />
           ))}
         </div>
       )}
@@ -81,6 +82,35 @@ export const SearchResults = ({
   );
 };
 
+export const SearchPagination = ({
+  page,
+  total_data,
+  setPage,
+}: {
+  page: number;
+  total_data: number;
+  setPage: (page: number) => void;
+}) => {
+  return (
+    <div className="flex justify-between mt-5">
+      <button
+        className={`btn mr-2 ${page > 1 ? "" : "invisible"}`}
+        onClick={() => {
+          if (page > 1) setPage(page - 1);
+        }}
+      >
+        <IoMdArrowBack className="text-2xl text-white" />
+      </button>
+
+      {total_data > page * 30 && (
+        <button className="btn" onClick={() => setPage(page + 1)}>
+          <IoMdArrowBack className="text-2xl text-white transform rotate-180" />
+        </button>
+      )}
+    </div>
+  );
+};
+
 const getRamdomColor = (): string => {
   const colors = [
     "bg-pink-600",
@@ -101,10 +131,10 @@ const types: { [key: string]: string } = {
 };
 
 export const ResultItem = ({ item }: { item: Item }) => {
-  const { name, listeners, type, image_url, is_generic_image } = item;
+  const { name, listeners, type, image_url, is_generic_image, url } = item;
 
   return (
-    <div className="overflow-hidden">
+    <a href={url} className="overflow-hidden" target="_blank">
       <div className="rounded-2xl overflow-hidden relative w-fit h-fit">
         <img
           src={image_url}
@@ -122,8 +152,8 @@ export const ResultItem = ({ item }: { item: Item }) => {
       <div className="mt-3">
         <p className="text-white opacity-60 text-sm">{types[type]}</p>
         <H3>{name}</H3>
-        {listeners > 0 && <Text className="text-sm">{listeners} oyentes</Text>}
+        {listeners > 0 && <Text className="text-sm">{listeners} {listeners > 1 ? 'oyentes' : 'oyente'}</Text>}
       </div>
-    </div>
+    </a>
   );
 };

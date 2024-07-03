@@ -1,5 +1,6 @@
 import {
   SearchBarContainer,
+  SearchPaginationContainer,
   SearchResultsContainer,
 } from "../../components/containers/searchContainer";
 import { DataProvider } from "../../contexts";
@@ -12,6 +13,8 @@ export default function HomePage() {
           <SearchBarContainer />
         </div>
         <SearchResultsContainer />
+
+        <SearchPaginationContainer />
       </div>
     </DataProvider>
   );
