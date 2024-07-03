@@ -1,62 +1,43 @@
 import { createContext, useEffect, useState } from "react";
-import { firebaseService } from "../services";
-import { Credentials } from "../interfaces/authInterfaces";
+import { useFirebase } from "../hooks";
+import { FirebaseResponse } from "../interfaces/firebaseInterfaces";
 
 type authStatus = "loading" | "unauth" | "auth";
 
-const AuthContext = createContext({
-  status: "loading",
-  login: (credentials: Credentials) => {
-    console.log(credentials);
-  },
-  register: (credentials: Credentials) => {
-    console.log(credentials);
-  },
-  logout: () => {},
-});
+interface AuthContextType extends FirebaseResponse {
+  status: authStatus;
+}
+
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children?: any }) {
+  const { user, isLoading, error, login, register, logout, checkAuth } = useFirebase();
   const [status, setStatus] = useState<authStatus>("loading");
 
   useEffect(() => {
-    // comprobate if user is logged
-    const checkAuth = async () => {
-      firebaseService.onAuthStateChanged((user) => {
-        if (user) {
-          setStatus("auth");
-        } else {
-          setStatus("unauth");
-        }
-      });
-    };
-
     checkAuth();
-  }, []);
+  }, [checkAuth]);
 
-  const login = async (credentials: Credentials) => {
-    const response = await firebaseService.login(credentials);
-    if (!response.user) throw new Error("Error al iniciar sesión");
-    setStatus("auth");
-  };
+  useEffect(() => {
+    if (user.uid) {
+      setStatus("auth");
+      return;
+    }
 
-  const register = async (credentials: Credentials) => {
-    const response = await firebaseService.register(credentials);
-    if (!response.user) throw new Error("Error al registrar el usuario");
-    setStatus("auth");
-  };
-
-  const logout = async () => {
-    await firebaseService.logout();
     setStatus("unauth");
-  };
+  }, [user]);
 
   return (
     <AuthContext.Provider
       value={{
-        status,
+        user,
         login,
         register,
         logout,
+        isLoading,
+        error,
+        status,
+        checkAuth,
       }}
     >
       {children}
