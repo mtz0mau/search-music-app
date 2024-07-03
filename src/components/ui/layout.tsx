@@ -24,15 +24,18 @@ export const Button = ({
   className = "",
   onClick,
   color = "primary",
+  disabled = false,
 }: {
   children: React.ReactNode;
   className?: string;
   onClick?: () => void;
   color?: "primary" | "secondary";
+  disabled?: boolean;
 }) => {
   return (
     <button
       className={`${colors[color]} hover:bg-opacity-70 hover:scale-95 transition-transform font-bold py-2.5 px-4 text-sm rounded-full ${className}`}
+      disabled={disabled}
       onClick={onClick}
     >
       {children}

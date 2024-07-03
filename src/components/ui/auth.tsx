@@ -1,24 +1,31 @@
 import { Credentials } from "../../interfaces/authInterfaces";
 import { Button, Input } from "./layout";
 
+const errors: {
+  [key: string]: string;
+} = {
+  "Firebase: Error (auth/invalid-credential).": "Credenciales inválidas",
+  "Firebase: Error (auth/email-already-in-use).": "Esta cuenta ya existe",
+};
+
 export const CredentialsForm = ({
   credentials,
   setCredentials,
   onSubmit,
   buttonText = "Iniciar sesión",
+  error,
+  loading,
 }: {
   credentials: Credentials;
   setCredentials: (credentials: Credentials) => void;
   onSubmit: () => void;
   buttonText?: string;
+  error?: string;
+  loading?: boolean;
 }) => {
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    try {
-      onSubmit();
-    } catch (error) {
-      console.log(error);
-    }
+    onSubmit();
   };
 
   return (
@@ -38,11 +45,20 @@ export const CredentialsForm = ({
         type="password"
         placeholder="Ingresa tu contraseña..."
       />
-      <Button>{buttonText}</Button>
+
+      {error && <p className="text-red-500 text-center">{errors[error] || error}</p>}
+
+      <Button
+        disabled={loading}
+      >{loading ? "Cargando..." :buttonText}</Button>
     </form>
   );
 };
 
 export const LogoutButton = ({ logout }: { logout: () => void }) => {
-  return <Button color="secondary" onClick={logout}>Cerrar sesión</Button>;
+  return (
+    <Button color="secondary" onClick={logout}>
+      Cerrar sesión
+    </Button>
+  );
 };

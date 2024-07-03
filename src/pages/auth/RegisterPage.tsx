@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { LoginFormContainer } from "../../components/containers/authContainer";
+import { RegisterFormContainer } from "../../components/containers/authContainer";
 import { H1, Text } from "../../components/ui/layout";
 
 export default function RegisterPage() {
@@ -15,7 +15,7 @@ export default function RegisterPage() {
       </div>
 
       <div className="w-full md:w-fit mx-auto">
-        <LoginFormContainer />
+        <RegisterFormContainer />
 
         <div className="flex items-center justify-between mt-10">
           <Link to={"/"} className="text-xs text-white">

@@ -9,10 +9,24 @@ export const LoginFormContainer = () => {
     email: "",
     password: "",
   });
+  const [error, setError] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   const onSubmit = async () => {
-    validateCredentials(credentials);
-    login(credentials);
+    const error: string = validateCredentials(credentials);
+    if (error) {
+      setError(error);
+      return;
+    }
+
+    setLoading(true);
+    try {
+      await login(credentials);
+    } catch (error: any) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -20,6 +34,8 @@ export const LoginFormContainer = () => {
       credentials={credentials}
       setCredentials={setCredentials}
       onSubmit={onSubmit}
+      error={error}
+      loading={loading}
     />
   );
 };
@@ -30,10 +46,24 @@ export const RegisterFormContainer = () => {
     email: "",
     password: "",
   });
+  const [error, setError] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   const onSubmit = async () => {
-    validateCredentials(credentials);
-    await register(credentials);
+    const error: string = validateCredentials(credentials);
+    if (error) {
+      setError(error);
+      return;
+    }
+
+    setLoading(true);
+    try {
+      await register(credentials);
+    } catch (error: any) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -42,23 +72,26 @@ export const RegisterFormContainer = () => {
       setCredentials={setCredentials}
       onSubmit={onSubmit}
       buttonText="Registrarse"
+      error={error}
+      loading={loading}
     />
   );
 };
 
-const validateCredentials = (credentials: Credentials) => {
+const validateCredentials = (credentials: Credentials): string => {
   // comprobate if email and password are not empty
   if (Object.values(credentials).includes(""))
-    throw new Error("El email y la contraseña son obligatorios");
+    return "Todos los campos son obligatorios";
 
   // comprobate if email is valid
   const emailReg = /\S+@\S+\.\S+/;
-  if (!emailReg.test(credentials.email))
-    throw new Error("El email no es válido");
+  if (!emailReg.test(credentials.email)) return "El email no es válido";
 
   // comprobate if password is valid
   if (credentials.password.length < 6)
-    throw new Error("La contraseña debe tener al menos 6 caracteres");
+    return "La contraseña debe tener al menos 6 caracteres";
+
+  return "";
 };
 
 export const LogoutButtonContainer = () => {
