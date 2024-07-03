@@ -21,6 +21,12 @@ Antes de comenzar, asegúrate de tener lo siguiente instalado en tu sistema:
 - [npm](https://www.npmjs.com/get-npm) (versión 10.x o superior)
 - [Docker](https://www.docker.com/)
 
+## API Keys
+Para poder ejecutar la aplicación, necesitarás obtener las siguientes claves de API:
+
+- [Firebase](https://firebase.google.com/)
+- [LastFM](https://www.last.fm/api)
+
 ## Instalación
 
 1. Clona el repositorio:
@@ -28,6 +34,12 @@ Antes de comenzar, asegúrate de tener lo siguiente instalado en tu sistema:
    ```sh
    git clone https://github.com/mtz0mau/search-music-app.git
    cd search-music-app
+   ```
+
+2. Configura las variables de entorno:
+
+   ```sh
+   cp .env.example .env
    ```
 
 ## Ejecutar la App
