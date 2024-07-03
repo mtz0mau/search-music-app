@@ -8,10 +8,20 @@ interface AuthContextType extends FirebaseResponse {
   status: authStatus;
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+const AuthContext = createContext<AuthContextType>({
+  user: { email: "", uid: "" },
+  login: async () => {},
+  register: async () => {},
+  logout: async () => {},
+  isLoading: false,
+  error: null,
+  status: "loading",
+  checkAuth: () => {},
+});
 
 export function AuthProvider({ children }: { children?: any }) {
-  const { user, isLoading, error, login, register, logout, checkAuth } = useFirebase();
+  const { user, login, register, logout, isLoading, error, checkAuth } =
+    useFirebase();
   const [status, setStatus] = useState<authStatus>("loading");
 
   useEffect(() => {
